@@ -1,0 +1,5 @@
+backend/node_modules
+backend/dist
+frontend/node_modules
+.DS_Store
+/.idea/.idea.water-jug-challenge.dir/.idea/

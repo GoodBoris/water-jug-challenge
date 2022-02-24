@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: postgres_db
+    image: postgres
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - database
+    env_file: ./.env
+
+  server:
+    container_name: nestjs_server
+    depends_on:
+      - db
+    build: 
+      context: ./backend
+      target: development
+    networks:
+      - webapp
+      - database
+    volumes: 
+      - ./backend:/app
+      - /app/node_modules
+      - /app/dist
+    restart: "no"
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    environment:
+      POSTGRES_HOST: db
+    env_file: ./.env
+
+volumes:
+  db_data: {}
+  
+networks:
+  webapp:
+    driver: bridge
+  database:
+    driver: bridge

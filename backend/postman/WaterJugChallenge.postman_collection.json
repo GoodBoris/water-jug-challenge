@@ -1,0 +1,247 @@
+{
+	"info": {
+		"_postman_id": "17ab7e96-22d5-4d2d-b5ca-7fde2f51ef74",
+		"name": "WaterJugChallenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "sign-up",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request : signup\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check values of user created\", function () {",
+									"    let attemptedResult = JSON.parse(postman.getEnvironmentVariable(\"userToCreate\"));",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.pseudo).to.eql(attemptedResult.pseudo);",
+									"    pm.expect(jsonData.role).to.eql(\"user\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{{userToCreate}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}:{{apiPort}}/api/auth/signup",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"port": "{{apiPort}}",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						},
+						"description": "Sign up a new user in the web application"
+					},
+					"response": []
+				},
+				{
+					"name": "email-free",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}:{{apiPort}}/api/auth/email-free/boris.illarionov@gmail.com",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"port": "{{apiPort}}",
+							"path": [
+								"api",
+								"auth",
+								"email-free",
+								"boris.illarionov@gmail.com"
+							]
+						},
+						"description": "Check whether a given mail is free to use"
+					},
+					"response": []
+				},
+				{
+					"name": "sign-in",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "boris.illarionov@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "myPassword",
+									"type": "text"
+								},
+								{
+									"key": "pseudo",
+									"value": "myPseudo",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{apiUrl}}:{{apiPort}}/api/auth/signin",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"port": "{{apiPort}}",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						},
+						"description": "Login an already existing userer"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"let userToCreate = {",
+							"\t\"email\": Math.random().toString(36).substring(10) + \"@gmail.com\",",
+							"\t\"password\":\"myPassword\",",
+							"\t\"pseudo\":\"myPseudo\"",
+							"}",
+							"",
+							"postman.setEnvironmentVariable(\"userToCreate\", JSON.stringify(userToCreate));"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "me",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{apiUrl}}:{{apiPort}}/api/users/me",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"port": "{{apiPort}}",
+							"path": [
+								"api",
+								"users",
+								"me"
+							]
+						},
+						"description": "todo"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Challenge Solution",
+			"item": [
+				{
+					"name": "find",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstJugCapacity\": 2,\n    \"secondJugCapacity\": 10,\n    \"targetCapacity\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}:{{apiPort}}/api/water-jug-solution/find",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"port": "{{apiPort}}",
+							"path": [
+								"api",
+								"water-jug-solution",
+								"find"
+							]
+						},
+						"description": "Find the best solution for the dynamic X,Y,Z"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
