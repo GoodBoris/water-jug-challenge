@@ -9,9 +9,15 @@ export class WorkerPool implements IWorkerPool {
   private pool: Piscina = new Piscina({
     filename: resolve(__dirname, 'algorithm/index.js'),
   });
-  
-  public async pourWater(fromJugCapacity: number, toJugCapacity: number, requiredAmount: number): Promise<ISolutionStep[]> {
-    return await this.pool.run({ fromJugCapacity, toJugCapacity, requiredAmount }, { name: 'pourWater' });
-  }
 
+  public async pourWater(
+    fromJugCapacity: number,
+    toJugCapacity: number,
+    requiredAmount: number
+  ): Promise<ISolutionStep[]> {
+    return await this.pool.run(
+      { fromJugCapacity, toJugCapacity, requiredAmount },
+      { name: 'pourWater' }
+    );
+  }
 }

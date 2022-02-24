@@ -1,3 +1,5 @@
 export enum StepAction {
-  Fill, Empty, Transfer
+  Fill,
+  Empty,
+  Transfer,
 }

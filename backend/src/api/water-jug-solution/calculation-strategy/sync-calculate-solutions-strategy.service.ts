@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ISolutionStep } from '~/api/water-jug-solution/interfaces/solution-step.interface';
 import { pourWater } from '~/api/water-jug-solution/algorithm';
-import {
-  CalculateSolutionsStrategyAbstract,
-} from '~/api/water-jug-solution/calculation-strategy/calculate-solutions-strategy.abstract';
+import { CalculateSolutionsStrategyAbstract } from '~/api/water-jug-solution/calculation-strategy/calculate-solutions-strategy.abstract';
 
 @Injectable()
 export class SynchronousCalculateSolutionsStrategy extends CalculateSolutionsStrategyAbstract {
@@ -11,7 +9,11 @@ export class SynchronousCalculateSolutionsStrategy extends CalculateSolutionsStr
     super();
   }
 
-  public async calculateSolutions(firstJugCapacity: number, secondJugCapacity: number, targetCapacity: number): Promise<[ISolutionStep[], ISolutionStep[]]> {
+  public async calculateSolutions(
+    firstJugCapacity: number,
+    secondJugCapacity: number,
+    targetCapacity: number
+  ): Promise<[ISolutionStep[], ISolutionStep[]]> {
     const fromFirstToSecondJugSolution = pourWater({
       fromJugCapacity: firstJugCapacity,
       toJugCapacity: secondJugCapacity,
@@ -22,6 +24,9 @@ export class SynchronousCalculateSolutionsStrategy extends CalculateSolutionsStr
       toJugCapacity: firstJugCapacity,
       requiredAmount: targetCapacity,
     });
-    return CalculateSolutionsStrategyAbstract.swapJugsAlias([fromFirstToSecondJugSolution, fromSecondToFirstJugSolution]);
+    return CalculateSolutionsStrategyAbstract.swapJugsAlias([
+      fromFirstToSecondJugSolution,
+      fromSecondToFirstJugSolution,
+    ]);
   }
 }

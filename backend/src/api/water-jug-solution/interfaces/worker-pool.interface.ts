@@ -1,3 +1,1 @@
-export interface IWorkerPool {
-  
-}
+export interface IWorkerPool {}

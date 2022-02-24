@@ -1,3 +1,4 @@
 export enum SolutionResult {
-  Solved, NoSolution
+  Solved,
+  NoSolution,
 }

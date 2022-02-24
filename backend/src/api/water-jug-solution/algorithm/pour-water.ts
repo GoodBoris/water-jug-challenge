@@ -2,13 +2,20 @@ import { ISolutionStep } from '~/api/water-jug-solution/interfaces/solution-step
 import { StepAction } from '~/api/water-jug-solution/enums/step-action';
 import { isPositiveInteger } from '~/shared/math/is-positive-integer';
 
-export default (
-  {
-    fromJugCapacity,
-    toJugCapacity,
-    requiredAmount,
-  }: { fromJugCapacity: number, toJugCapacity: number, requiredAmount: number }): ISolutionStep[] => {
-  if (!isPositiveInteger(fromJugCapacity) || !isPositiveInteger(toJugCapacity) || !isPositiveInteger(requiredAmount)) {
+export default ({
+  fromJugCapacity,
+  toJugCapacity,
+  requiredAmount,
+}: {
+  fromJugCapacity: number;
+  toJugCapacity: number;
+  requiredAmount: number;
+}): ISolutionStep[] => {
+  if (
+    !isPositiveInteger(fromJugCapacity) ||
+    !isPositiveInteger(toJugCapacity) ||
+    !isPositiveInteger(requiredAmount)
+  ) {
     return [];
   }
   let fromJug = fromJugCapacity;
@@ -38,4 +45,4 @@ export default (
     }
   }
   return solutionSteps;
-}
+};
