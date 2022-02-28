@@ -7,7 +7,6 @@ import {
   NotFoundException,
   Param,
   Post,
-  Res,
 } from '@nestjs/common';
 import { UserService } from '../users/user.service';
 import { AuthService } from './auth.service';
@@ -20,8 +19,9 @@ import { IAuthService } from '~/api/auth/interfaces/auth.service.interface';
 export class AuthController {
   constructor(
     @Inject(AuthService) private authService: IAuthService,
-    @Inject(UserService) private userService: IUserService
-  ) {}
+    @Inject(UserService) private userService: IUserService,
+  ) {
+  }
 
   @Post('signin')
   async signIn(@Body() body: SigninUserDto): Promise<{ token: string }> {
@@ -35,10 +35,10 @@ export class AuthController {
 
   @Post('signup')
   async signUp(
-    @Body() createUserDto: CreateUserDto
+    @Body() createUserDto: CreateUserDto,
   ): Promise<{ success: boolean }> {
     const emailConflict = await this.userService.findByEmail(
-      createUserDto.email
+      createUserDto.email,
     );
     if (emailConflict) {
       throw new ConflictException('email');
@@ -48,7 +48,7 @@ export class AuthController {
   }
 
   @Get('email-free/:email')
-  async emailFree(@Param() params: any): Promise<{ available: boolean }> {
+  async emailFree(@Param() params: { email: string }): Promise<{ available: boolean }> {
     const user = await this.userService.findByEmail(params.email);
     return { available: !!user };
   }
