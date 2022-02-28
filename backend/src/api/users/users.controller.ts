@@ -1,5 +1,4 @@
 import { Controller, Get, Inject } from '@nestjs/common';
-
 import { AuthUser } from '~/shared/decorators/auth-user.decorator';
 import { Roles } from '~/shared/decorators/roles.decorators';
 import { JwtPayload } from '../auth/interfaces/jwt-payload.interface';
