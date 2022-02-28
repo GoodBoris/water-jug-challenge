@@ -1,8 +1,8 @@
 import { SnackBarActionTypes } from './types';
-import { SnackBarAlert } from '../../../models';
+import { ISnackBarAlert } from '../../../models';
 import { Action } from '../models';
 
-export const setSnackBar = (data: SnackBarAlert): Action => {
+export const setSnackBar = (data: ISnackBarAlert): Action => {
   return {
     type: SnackBarActionTypes.SET_SNACKBAR,
     payload: data
